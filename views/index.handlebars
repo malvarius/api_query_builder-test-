@@ -1,0 +1,82 @@
+<h1>API Queries</h1>
+
+
+<h2>Update an api string</h2>
+<form id="updatemovie" class="button-size">
+  <input type="text" name="id" placeholder="id">
+	<textarea type="text" name="movie" placeholder="what do you want to update the artist to(could be update search params w/e we want)?"></textarea>
+	<button type="submit">Update Query!</button>
+</form>
+
+<ul>
+  {{#each inputs}}
+    <li>
+      <p>
+        {{this.id}}. {{this.str1}}{{this.input1}}{{this.str2}}</br>{{this.input2}}
+
+        <button data-movieid="{{this.id}}" class="delmovie">Delete</button>
+      </p>
+    </li>
+  {{/each}}
+</ul>
+
+<script type="text/javascript">
+  $(".delmovie").on("click", function(event) {
+    var id = $(this).data("movieid");
+
+    // Send the DELETE request.
+    $.ajax("/api/string/" + id, {
+      type: "DELETE"
+    }).then(
+      function() {
+        console.log("deleted id ", id);
+        // Reload the page to get the updated list
+        location.reload();
+      }
+    );
+  });
+
+  $("#addmovie").on("submit", function(event) {
+    // Make sure to preventDefault on a submit event.
+    event.preventDefault();
+
+    var newMovie = {
+      movie: $("#addmovie [name=movie]").val().trim()
+    };
+
+    // Send the POST request.
+    $.ajax("/api/string", {
+      type: "POST",
+      data: newMovie
+    }).then(
+      function() {
+        console.log("added new movie");
+        // Reload the page to get the updated list
+        location.reload();
+      }
+    );
+  });
+
+  $("#updatemovie").on("submit", function(event) {
+    // Make sure to preventDefault on a submit event.
+    event.preventDefault();
+
+    var id = $("[name=id]").val().trim();
+
+    var updatedMovie = {
+      movie: $("#updatemovie [name=movie]").val().trim()
+    };
+
+    // Send the PUT request.
+    $.ajax("/api/string/" + id, {
+      type: "PUT",
+      data: updatedMovie
+    }).then(
+      function() {
+        console.log("updated id ", id);
+        // Reload the page to get the updated list
+        location.reload();
+      }
+    );
+  });
+</script>
