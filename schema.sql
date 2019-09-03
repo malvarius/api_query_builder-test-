@@ -1,29 +1,31 @@
-/*
-
-To run this file, we do the following in our Terminal:
-
-1. Go to the directory of this sql file.
-
-2. Get into our mysql console.
-
-3. Run "source schema.sql"
-
-*/
-
--- Drops the movie_planner_db if it already exists --
-DROP DATABASE IF EXISTS movie_planner_db;
+DROP DATABASE IF EXISTS api_builder;
 
 -- Create the database movie_planner_db and specified it for use.
-CREATE DATABASE movie_planner_db;
+CREATE DATABASE api_builder;
 
-USE movie_planner_db;
+USE api_builder;
 
 -- Create the table plans.
-CREATE TABLE movies (
+CREATE TABLE api_inputs (
   id int NOT NULL AUTO_INCREMENT,
-  movie varchar(255) NOT NULL,
+  str1 varchar(255) NOT NULL,
+  input1 varchar(255) NOT NULL,
+  str2 varchar(255) NOT NULL,
+  input2 varchar(255) NOT NULL,
   PRIMARY KEY (id)
 );
 
 -- Insert a set of records.
-INSERT INTO movies (movie) VALUES ('Rush Hour 2');
+insert into api_inputs
+(str1, input1,str2,input2)
+values
+("axios({
+  url: `https://itunes.apple.com/search?term=${","ARTISTHERE","}&limit=10`,
+  method: 'GET'
+})
+  .then(function(response) {
+    console.log(response);
+  })
+  .catch(function(err) {
+    console.error(err);
+  });","INPUT@ IF NEEDED")
